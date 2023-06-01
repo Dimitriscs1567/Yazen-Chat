@@ -2,8 +2,6 @@ import {
     QueryDocumentSnapshot,
     addDoc,
     collection,
-    doc,
-    getDoc,
     getDocs,
     getFirestore,
     limit,
@@ -49,7 +47,9 @@ export const getMessages = async (lastDoc?: QueryDocumentSnapshot<Message>) => {
         }
 
         const allDocs = (await getDocs(q)).docs
-        return [...allDocs.map(d => d.data()), allDocs[allDocs.length - 1]];
+        if (allDocs.length > 0)
+            return [...allDocs.map(d => d.data()), allDocs[allDocs.length - 1]];
+        return []
     } catch (e) {
         return [];
     }

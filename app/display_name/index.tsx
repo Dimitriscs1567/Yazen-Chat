@@ -95,14 +95,14 @@ const DispayNamePage = () => {
 
 const styles = StyleSheet.create({
     container: {
-        height: '100vh',
+        height: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
     },
     innerContainer: {
         height: 200,
-        width: '95vw',
+        width: '95%',
         maxWidth: 300,
         display: 'flex',
         justifyContent: 'center',
