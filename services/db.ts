@@ -15,9 +15,12 @@ import { messageConverter, Message } from "../models/message";
 
 export const db = getFirestore(app);
 
+export const dbUsersName = "dimiscs_users"
+export const dbMessagesName = "dimiscs_messages"
+
 export const addUser = async (name: string) => {
     try {
-        const usersRef = collection(db, "users");
+        const usersRef = collection(db, dbUsersName);
         const q = query(usersRef, where("name", "==", name));
         const res = await getDocs(q);
 
@@ -37,7 +40,7 @@ export const addUser = async (name: string) => {
 
 export const getMessages = async (lastDoc?: QueryDocumentSnapshot<Message>) => {
     try {
-        const messagesRef = collection(db, "messages");
+        const messagesRef = collection(db, dbMessagesName);
         let q;
         if (lastDoc) {
             q = query(messagesRef, orderBy("date", "desc"), limit(25), startAfter(lastDoc)).withConverter(messageConverter);
@@ -58,7 +61,7 @@ export const getMessages = async (lastDoc?: QueryDocumentSnapshot<Message>) => {
 
 export const addMessage = async (message: Message) => {
     try {
-        const messagesRef = collection(db, "messages");
+        const messagesRef = collection(db, dbMessagesName);
         await addDoc(messagesRef, messageConverter.toFirestore(message));
     } catch (e) {
         return

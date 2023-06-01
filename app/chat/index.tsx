@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { getKey, name_storage } from '../../services/local_storage';
 import { useRouter } from 'expo-router';
-import { addMessage, db, getMessages } from '../../services/db';
+import { addMessage, db, dbMessagesName, getMessages } from '../../services/db';
 import { Message, messageConverter } from '../../models/message';
 import {
     QueryDocumentSnapshot,
@@ -49,7 +49,7 @@ const ChatPage = () => {
 
     useEffect(() => {
         const unsub = onSnapshot(
-            collection(db, 'messages').withConverter(messageConverter),
+            collection(db, dbMessagesName).withConverter(messageConverter),
             (doc) => {
                 if (
                     doc.docChanges().length === 1 &&
