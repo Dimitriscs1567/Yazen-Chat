@@ -15,7 +15,7 @@ import {
 import { app } from "../firebaseConfig";
 import { messageConverter, Message } from "../models/message";
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 export const addUser = async (name: string) => {
     try {
@@ -59,9 +59,8 @@ export const getMessages = async (lastDoc?: QueryDocumentSnapshot<Message>) => {
 export const addMessage = async (message: Message) => {
     try {
         const messagesRef = collection(db, "messages");
-        const res = await addDoc(messagesRef, messageConverter.toFirestore(message));
-        return res.id
+        await addDoc(messagesRef, messageConverter.toFirestore(message));
     } catch (e) {
-        return undefined;
+        return
     }
 };
